@@ -1,0 +1,1185 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="waniani">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="info相关资料查看方式原文地址：https:&#x2F;&#x2F;www.x.org&#x2F;archive&#x2F;X11R7.7&#x2F;doc&#x2F;man&#x2F;man5&#x2F;xorg.conf.5.xhtml 使用man手册可以看：man xorg.conf INTRODUCTIONxorg.conf,xorg.conf.d 是 Xorg X server 的配置文件 Xorg支持几种提供或获取配置和运行时参数的机制：命令行选项，环境变量，x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xorg配置文件说明">
+<meta property="og:url" content="http://example.com/2024/06/09/xorg%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="info相关资料查看方式原文地址：https:&#x2F;&#x2F;www.x.org&#x2F;archive&#x2F;X11R7.7&#x2F;doc&#x2F;man&#x2F;man5&#x2F;xorg.conf.5.xhtml 使用man手册可以看：man xorg.conf INTRODUCTIONxorg.conf,xorg.conf.d 是 Xorg X server 的配置文件 Xorg支持几种提供或获取配置和运行时参数的机制：命令行选项，环境变量，x">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-08T19:14:13.224Z">
+<meta property="article:author" content="waniani">
+<meta property="article:tag" content="xorg">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>xorg配置文件说明 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="xorg配置文件说明"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-09 00:00" pubdate>
+          2024年6月9日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          124 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">xorg配置文件说明</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="info"><a href="#info" class="headerlink" title="info"></a>info</h2><h3 id="相关资料查看方式"><a href="#相关资料查看方式" class="headerlink" title="相关资料查看方式"></a>相关资料查看方式</h3><p>原文地址：<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man5/xorg.conf.5.xhtml">https://www.x.org/archive/X11R7.7/doc/man/man5/xorg.conf.5.xhtml</a></p>
+<p>使用man手册可以看：man xorg.conf</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>xorg.conf,xorg.conf.d 是 Xorg X server 的配置文件</p>
+<p>Xorg支持几种提供或获取配置和运行时参数的机制：命令行选项，环境变量，xorg.conf和xorg.conf.d配置文件，自动检测和回退到默认值。当以多于一种方式提供相同信息时，使用最高优先级机制。机制列表从最高优先级到最低优先级排序。请注意，并非所有参数都可通过所有参数都可通过所有方法提供。可用的命令行选项和环境变量（以及一些默认值）在<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/Xserver.1.xhtml">Xserver</a> 和 <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/Xorg.1.xhtml">Xorg</a> 手册中有介绍。大多数配置文件参数以及默认值如下所述。驱动程序和模块特定的配置参数在相关的驱动程序或模块手册页中描述。</p>
+<h2 id="DESCRIPTION"><a href="#DESCRIPTION" class="headerlink" title="DESCRIPTION"></a>DESCRIPTION</h2><p>Xorg使用一个名为xorg.conf的配置文件和以xorg.conf.d目录中的.conf结尾的文件进行初始设置。当服务器作为普通用户启动时，将在以下位置搜索xorg.conf配置文件：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/etc/</span>X11/&lt;cmdline&gt;  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>&lt;cmdline&gt;  <br><span class="hljs-regexp">/etc/</span>X11/<span class="hljs-variable">$XORGCONFIG</span>  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span><span class="hljs-variable">$XORGCONFIG</span>  <br><span class="hljs-regexp">/etc/</span>X11/xorg.conf  <br><span class="hljs-regexp">/etc/</span>xorg.conf  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>xorg.conf.&lt;hostname&gt;  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>xorg.conf  <br><span class="hljs-regexp">/usr/</span>lib<span class="hljs-regexp">/X11/</span>xorg.conf.&lt;hostname&gt;  <br><span class="hljs-regexp">/usr/</span>lib<span class="hljs-regexp">/X11/</span>xorg.conf<br></code></pre></td></tr></table></figure>
+<p>其中<code>&lt;cmdline&gt;</code>是使用-config参数的相对路径（不含 “..” 的路径），<code>$ XORGCONFIG</code>是该环境变量指定的相对路径（不含 “..” 的路径），<code>&lt;hostname&gt;</code>是 gethostname 报告的计算机的主机名。  </p>
+<p>当Xorg服务器由 root 用户启动时，配置文件搜索位置如下：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk">&lt;cmdline&gt;  <br><span class="hljs-regexp">/etc/</span>X11/&lt;cmdline&gt;  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>&lt;cmdline&gt;  <br><span class="hljs-variable">$XORGCONFIG</span>  <br><span class="hljs-regexp">/etc/</span>X11/<span class="hljs-variable">$XORGCONFIG</span>  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span><span class="hljs-variable">$XORGCONFIG</span>  <br><span class="hljs-regexp">/etc/</span>X11/xorg.conf  <br><span class="hljs-regexp">/etc/</span>xorg.conf  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>xorg.conf.&lt;hostname&gt;  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>xorg.conf  <br><span class="hljs-regexp">/usr/</span>lib<span class="hljs-regexp">/X11/</span>xorg.conf.&lt;hostname&gt;  <br><span class="hljs-regexp">/usr/</span>lib<span class="hljs-regexp">/X11/</span>xorg.conf<br></code></pre></td></tr></table></figure>
+<p>其中<code>&lt;cmdline&gt;</code>是使用-config命令行选项（可以是绝对或相对）指定的路径，$ XORGCONFIG是由该环境变量（绝对或相对）指定的路径，$ HOME是由该环境变量指定的路径（通常为主目录），<code>&lt;hostname&gt;</code>是 <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man3/gethostname.3.xhtml">gethostname</a> 报告的计算机主机名。  </p>
+<p>当服务器作为普通用户启动时，在以下目录中搜索其他配置文件：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/etc/</span>X11/&lt;cmdline&gt;  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>&lt;cmdline&gt;  <br><span class="hljs-regexp">/etc/</span>X11/xorg.conf.d  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>xorg.conf.d<br></code></pre></td></tr></table></figure>
+<p>其中<code>&lt;cmdline&gt;</code>是使用-configdir参数指定的相对路径（不含 “..” 的路径）。  </p>
+<p>当Xorg服务器由“root”用户启动时，配置文件夹搜索位置如下：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">&lt;cmdline&gt;  <br><span class="hljs-regexp">/etc/</span>X11/&lt;cmdline&gt;  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>&lt;cmdline&gt;  <br><span class="hljs-regexp">/etc/</span>X11/xorg.conf.d  <br><span class="hljs-regexp">/usr/</span>etc<span class="hljs-regexp">/X11/</span>xorg.conf.d<br></code></pre></td></tr></table></figure>
+<p>其中<code>&lt;cmdline&gt;</code>是使用-configdir参数指定的路径（可以是绝对或相对）。  </p>
+<p>最后，还将在为系统使用保留的目录中搜索配置文件。 这是为了将本地配置和第三方配置分离开来。这些文件位于以下目录中：  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/X11/</span>xorg.conf.d  <br><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/X11/</span>xorg.conf.d<br></code></pre></td></tr></table></figure>
+
+<p>xorg.conf和xorg.conf.d文件由许多段组成，这些段可以按任何顺序存在，或者省略使用默认配置值。每个部分具有以下形式</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;SectionName&quot;</span><br>SectionEntry<br>...<br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p>这些段的名称是：  </p>
+<blockquote>
+<p><strong>Files</strong> 文件路径名<br><strong>ServerFlags</strong> 服务器标志<br><strong>Module</strong> 动态模块加载<br><strong>Extensions</strong> 扩展启用<br><strong>InputDevice</strong> 输入设备描述<br><strong>InputClass</strong> 输入类描述<br><strong>Device</strong> 图形设备描述<br><strong>VideoAdaptor</strong> Xv视频适配器描述<br><strong>Monitor</strong> 监视器描述<br><strong>Modes</strong> 视频模式说明<br><strong>Screen</strong> 屏幕配置<br><strong>ServerLayout</strong> 整体布局<br><strong>DRI</strong> DRI特定配置<br><strong>Vendor</strong> 供应商特定的配置</p>
+</blockquote>
+<p>为了兼容性目的，仍然识别以下过时的段名称。在新的配置文件中，应该使用InputDevice部分。  </p>
+<blockquote>
+<p><strong>Keyboard</strong> 键盘配置<br><strong>Pointer</strong> 指针或鼠标配置</p>
+</blockquote>
+<p>旧的XInput部分不再被识别。</p>
+<p><strong>ServerLayout</strong> 部分位于最高级别。它们将把一次会话中使用到的输入和输出设备绑定在一起。 输入设备在 <strong>InputDevice</strong> sections 中描述。输出设备通常由多个独立的组件（例如，图形板和监视器）组成。 这些多个组件在 <strong>Screen</strong> sections 中绑定在一起，这些是由<strong>ServerLayout</strong> 部分引用的。 每个 <strong>Screen</strong> sections 将图形板和显示器绑定在一起。图形板在 <strong>Device</strong> sections 进行了说明，监视器在 <strong>Monitor</strong> sections 进行了说明。</p>
+<p>配置文件关键字不区分大小写，忽略<code>“_”</code>字符。 大多数字符串（包括选项名称）也不区分大小写，对空格和<code>“_”</code>字符不敏感。</p>
+<p>每个配置文件条目通常占用文件中的一行。 它们由一个关键字组成，可能后跟一个或多个参数，参数的数量和类型取决于关键字。参数类型有：</p>
+<ul>
+<li><strong>Integer</strong> 十进制，十六进制或八进制的整数  </li>
+<li><strong>Real</strong> 一个浮点数  </li>
+<li><strong>String</strong> 用双引号括起来的字符串</li>
+</ul>
+<blockquote>
+<p>注意：十六进制整数值必须以“0x”开头，八进制值以“0”开头。</p>
+</blockquote>
+<p>可以使用称为Option的特殊关键字向服务器的各种组件提供自由形式的数据。Option关键字需要一个或两个字符串参数。 第一个是选项名称，可选的第二个参数是选项值。 一些常用的选项值类型包括：</p>
+<ul>
+<li><strong>Integer</strong> 十进制，十六进制或八进制的整数  </li>
+<li><strong>Real</strong> 一个浮点数  </li>
+<li><strong>String</strong> 一个字符序列  </li>
+<li><strong>Boolean</strong> 布尔值（见下文）  </li>
+<li><strong>Frequency</strong> 一个频率值（见下文）</li>
+</ul>
+<blockquote>
+<p>请注意，所有<strong>Option</strong>值，而不仅仅是字符串，必须用引号括起来。</p>
+</blockquote>
+<p>布尔选项可以可选地具有指定的值。当未指定值时，选项的值为<strong>TRUE</strong>。 以下布尔选项值被识别为<strong>TRUE</strong>：  </p>
+<blockquote>
+<p>**1, on, true, yes  </p>
+</blockquote>
+<p>并且以下布尔选项值被识别为FALSE：  </p>
+<blockquote>
+<p><strong>0, off, false, no</strong></p>
+</blockquote>
+<p>如果选项名称前缀为“No”，则选项值被否定。  </p>
+<p>示例：以下选项条目是等效的：  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json">Option <span class="hljs-string">&quot;Accel&quot;</span> <span class="hljs-string">&quot;Off&quot;</span>  <br>Option <span class="hljs-string">&quot;NoAccel&quot;</span>  <br>Option <span class="hljs-string">&quot;NoAccel&quot;</span> <span class="hljs-string">&quot;On&quot;</span>  <br>Option <span class="hljs-string">&quot;Accel&quot;</span> <span class="hljs-string">&quot;false&quot;</span>  <br>Option <span class="hljs-string">&quot;Accel&quot;</span> <span class="hljs-string">&quot;no&quot;</span><br></code></pre></td></tr></table></figure>
+<p>频率选项值由一个实数组成，可选地后跟以下频率单位之一：  </p>
+<blockquote>
+<p><strong>Hz, k, kHz, M, MHz</strong></p>
+</blockquote>
+<p>当省略单位名称时，将根据该值和该值的适当范围的期望确定正确的单位。建议在使用频率选项值时始终指定单位，以避免在确定值时出现任何错误。</p>
+<h2 id="FILE-SECTION"><a href="#FILE-SECTION" class="headerlink" title="FILE SECTION"></a>FILE SECTION</h2><p><strong>File</strong> section用于指定服务器所需的一些路径名称。其中一些路径也可以从命令行设置（参见 <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/Xserver.1.xhtml">Xserver</a> 和 <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/Xorg.1.xhtml">Xorg</a> ）。 命令行设置将覆盖配置文件中指定的值。<strong>File</strong> section是可选的，以及可能出现在其中的所有条目。</p>
+<p>可在此部分中显示的条目是：</p>
+<p><strong>FontPath “</strong><em>path</em><strong>“</strong></p>
+<p>设置字体的搜索路径。此路径是字体路径元素的逗号分隔列表，Xorg服务器会搜索字体数据库。 可以指定多个 <strong>FontPath</strong> 条目，并且它们将被连接以构建服务器使用的字体路径。字体路径元素可以是绝对目录路径，目录目录或字体服务器标识符。 后两种的格式解释如下：</p>
+<p>Catalogue directories</p>
+<p>可以使用前缀目录指定 catalogue directories：然后可以使用指向真实字体目录的符号链接填充目录，在符号链接名称中使用以下语法：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">&lt;identifier&gt;<span class="hljs-symbol">:</span>[attribute]<span class="hljs-symbol">:pri=&lt;priority&gt;</span><br></code></pre></td></tr></table></figure>
+<p>其中<code>&lt;identifier&gt;</code>是字母数字标识符，<code>[attribute]</code>是将传递到底层FPE的属性，<code>&lt;priority&gt;</code>是用于对字体文件FPE进行排序的数字。 例子：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-number">75</span>dpi:unscaled:<span class="hljs-attr">pri</span><span class="hljs-operator">=</span><span class="hljs-number">20</span> -&gt; <span class="hljs-keyword">/usr/</span>share/X11<span class="hljs-keyword">/fonts/</span><span class="hljs-number">75</span>dpi  <br><span class="hljs-symbol">gscript:</span><span class="hljs-attr">pri</span><span class="hljs-operator">=</span><span class="hljs-number">60</span> -&gt; <span class="hljs-keyword">/usr/</span>share<span class="hljs-keyword">/fonts/</span>default/ghostscript  <br><span class="hljs-symbol">misc:</span>unscaled:<span class="hljs-attr">pri</span><span class="hljs-operator">=</span><span class="hljs-number">10</span> −&gt; <span class="hljs-keyword">/usr/</span>share/X11<span class="hljs-keyword">/fonts/</span>misc<br></code></pre></td></tr></table></figure>
+
+<p>字体服务器标识符：</p>
+<p>字体服务器标识符的格式如下：</p>
+<figure class="highlight bnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bnf"><span class="hljs-attribute">&lt;trans&gt;</span>/<span class="hljs-attribute">&lt;hostname&gt;</span>:<span class="hljs-attribute">&lt;port−number&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中<code>&lt;trans&gt;</code>是用于连接到字体服务器的传输类型（例如，用于UNIX域套接字的unix或用于TCP &#x2F; IP连接的tcp），<code>&lt;hostname&gt;</code>是运行字体服务器的机器的主机名，<code> _&lt;port-number&gt;_</code>是字体服务器正在侦听的端口号（通常为7100）。</p>
+<p>当未在配置文件中指定此条目时，服务器将回退到编译的默认字体路径，其中包含以下字体路径元素（可以在目录目录中设置）：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/fonts/</span>X11<span class="hljs-regexp">/misc/</span><br><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/fonts/</span>X11<span class="hljs-regexp">/TTF/</span><br><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/fonts/</span>X11<span class="hljs-regexp">/OTF/</span><br><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/fonts/</span>X11<span class="hljs-regexp">/Type1/</span><br><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/fonts/</span>X11<span class="hljs-regexp">/100dpi/</span><br><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/fonts/</span>X11<span class="hljs-regexp">/75dpi/</span><br></code></pre></td></tr></table></figure>
+
+<p>发现无效的字体路径元素将在服务器启动时从字体路径中删除。</p>
+<p><strong>ModulePath “</strong><em>path</em><strong>“</strong></p>
+<p>设置可加载Xorg服务器模块的搜索路径。 此路径是逗号分隔的目录列表，Xorg服务器按照指定的顺序搜索可加载模块加载。 可以指定多个ModulePath条目，并且它们将被连接以构建服务器使用的模块搜索路径。 默认模块路径为</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>lib<span class="hljs-regexp">/xorg/m</span>odules<br></code></pre></td></tr></table></figure>
+
+<p><strong>XkbDir “</strong><em>path</em><strong>“</strong></p>
+<p>设置键盘布局文件的基本目录。 <strong>-xkbdir</strong>命令行选项可以用于覆盖此选项。 默认目录为</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/X11/</span>xkb<br></code></pre></td></tr></table></figure>
+
+<h2 id="SERFLAGS-SECTION"><a href="#SERFLAGS-SECTION" class="headerlink" title="SERFLAGS SECTION"></a>SERFLAGS SECTION</h2><p>除了本节（下面描述）特有的选项外，<strong>ServerFlags</strong> 部分用于指定一些全局Xorg服务器选项。 本节中的entries都是<strong>Options</strong>，但为了兼容性目的，仍然可以识别某些旧样式条目。 那些旧样式条目在这里没有记录，并且不鼓励使用它们。 <strong>ServerFlags</strong> section是可选的，可以在其中指定的条目。</p>
+<p>本节中指定的<strong>Options</strong>（“<strong>DefaultServerLayout</strong>” Option除外）可能会被活动<strong>ServerLayouts</strong> section中指定的<strong>Options</strong>覆盖。 使用命令行等效项的选项将被覆盖。 本 section 认可的选项有：</p>
+<p><strong>Option “DefaultServerLayout</strong>“ “<em>layout−id</em>“</p>
+<p>这指定在缺少-layout命令行选项时使用的默认ServerLayout部分。</p>
+<p><strong>Option “NoTrapSignals”</strong> “<em>boolean</em>“</p>
+<p> 这防止Xorg服务器捕获一系列意外的致命信号并干净地退出。否则，Xorg服务器将死机并且丢弃发生故障的核心。默认行为是Xorg服务器完全退出，但仍然放置一个核心文件。一般来说，除非您正在调试Xorg服务器问题并知道如何处理后果，否则不要使用此选项。</p>
+<p><strong>Option “UseSIGIO”</strong> <em>“boolean”</em>  </p>
+<p>这控制Xorg服务器是否请求通过SIGIO信号处理程序（在某些平台上也称为SIGPOLL）报告来自输入设备的事件，或仅通过标准select（3）循环进行报告。默认行为是特定于平台的。通常，您不想使用此选项，除非您正在调试Xorg服务器，或解决特定的错误，直到它被修复，并了解后果。  </p>
+<p><strong>Option “DontVTSwitch”</strong> <em>“boolean”</em>  </p>
+<p>这不允许使用Ctrl + Alt + Fn序列（其中Fn表示编号的功能键之一）。该序列通常用于切换到具有此功能的操作系统上的另一个“虚拟终端”。启用此选项时，该键序列没有特殊含义，并传递给客户端。默认值：关闭。<br><strong>Option “DontZap”</strong> <em>“boolean”</em>  </p>
+<p>这不允许使用Terminate_Server XKB操作（通常在Ctrl + Alt + Backspace，取决于XKB选项）。此操作通常用于终止Xorg服务器。启用此选项时，操作不起作用。默认值：关闭。  </p>
+<p><strong>Option “DontZoom”</strong> <em>“boolean”</em>  </p>
+<p>这不允许使用Ctrl + Alt + Keypad-Plus和Ctrl + Alt + Keypad-Minus序列。这些序列允许您在视频模式之间切换。启用此选项时，这些键序列没有特殊含义，并传递到客户端。默认值：关闭。  </p>
+<p><strong>Option “DisableVidModeExtension”</strong> <em>“boolean”</em>  </p>
+<p>这将禁用xvidtune客户端使用的VidMode扩展的可用于更改视频模式的部分。默认值：启用VidMode扩展。  </p>
+<p><strong>Option “AllowNonLocalXvidtune”</strong> <em>“boolean”</em>  </p>
+<p>这允许xvidtune客户端（和使用VidMode扩展的其他客户端）从另一个主机连接。默认值：关闭。  </p>
+<p><strong>Option “AllowMouseOpenFail”</strong> <em>“boolean”</em>  </p>
+<p>这告诉<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/mousedrv.4.xhtml">mousedrv（4）</a>和<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/vmmouse.4.xhtml">vmmouse（4）</a>驱动程序不报告故障，如果鼠标设备无法打开&#x2F;初始化。它对<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/evdev.4.xhtml">evdev（4）</a>或其他驱动程序没有影响。默认值：false。  </p>
+<p><strong>Option “BlankTime”</strong> <em>“time”</em>  </p>
+<p>设置屏幕保护程序的空白阶段的不活动超时。时间以分钟为单位。这相当于Xorg服务器的-s标志，并且可以在运行时使用xset（1）更改该值。默认值：10分钟。  </p>
+<p><strong>Option “StandbyTime”</strong> <em>“time”</em>  </p>
+<p>设置DPMS模式的待机阶段的不活动超时。时间以分钟为单位，并且该值可以在运行时使用<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/xset.1.xhtml">xset（1）</a>更改。默认值：10分钟。这仅适用于VESA DPMS兼容的显示器，并且可能不受所有视频驱动程序的支持。它仅对具有“DPMS”选项设置的屏幕启用（请参见下面的MONITOR部分）。  </p>
+<p><strong>Option “SuspendTime”</strong> <em>“time”</em>  </p>
+<p>设置DPMS模式的暂停阶段的不活动超时。时间以分钟为单位，并且该值可以在运行时使用<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/xset.1.xhtml">xset（1）</a>更改。默认值：10分钟。这仅适用于VESA DPMS兼容的显示器，并且可能不受所有视频驱动程序的支持。它仅对具有“DPMS”选项设置的屏幕启用（请参见下面的MONITOR部分）。  </p>
+<p><strong>Option “OffTime”</strong> <em>“time”</em>  </p>
+<p>设置DPMS模式的关闭阶段的不活动超时。时间以分钟为单位，并且该值可以在运行时使用<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/xset.1.xhtml">xset（1）</a>更改。默认值：10分钟。这仅适用于VESA DPMS兼容的显示器，并且可能不受所有视频驱动程序的支持。它仅对具有“DPMS”选项设置的屏幕启用（请参见下面的MONITOR部分）。  </p>
+<p><strong>Option “Pixmap”</strong> <em>“bpp”</em>  </p>
+<p>这将设置pixmap格式以用于深度24. bpp的允许值为24和32.默认值：32，除非驱动程序约束不允许这种情况（这是罕见的）。注意：当此值设置为24时，会导致某些客户端行为不正常。  </p>
+<p><strong>Option “NoPM”</strong> <em>“boolean”</em>  </p>
+<p>禁用与电源管理事件有关的功能。默认值：在支持它的平台上启用PM。  </p>
+<p><strong>Option “Xinerama”</strong> <em>“boolean”</em>  </p>
+<p>启用或禁用XINERAMA扩展。默认为禁用。  </p>
+<p><strong>Option “AIGLX”</strong> <em>“boolean”</em>  </p>
+<p>启用或禁用AIGLX。默认情况下启用AIGLX。  </p>
+<p><strong>Option “DRI2”</strong> <em>“boolean”</em>  </p>
+<p>启用或禁用DRI2。默认情况下禁用DRI2。  </p>
+<p><strong>Option “GlxVisuals”</strong> <em>“string”</em>  </p>
+<p>此选项控制GLX模块设置的GLX视图的数量。默认值是典型值，它将建立GLXFBConfigs的典型子集，由驱动程序提供为GLX视觉效果。其他选项是最小的，它将设置GLX规范允许的最小集合，所有这些都将为所有GLXFBConfig设置GLX视觉效果。  </p>
+<p><strong>Option “UseDefaultFontPath”</strong> <em>“boolean”</em>  </p>
+<p>包括默认字体路径，即使在xorg.conf中指定了其他路径。 如果启用，则也包括其他字体路径。 默认情况下启用。  </p>
+<p><strong>Option “IgnoreABI”</strong> <em>“boolean”</em>  </p>
+<p>允许加载为不同的，可能不兼容的X服务器版本构建的模块。 默认情况下禁用。  </p>
+<p><strong>Option “AutoAddDevices”</strong> <em>“boolean”</em>  </p>
+<p>如果禁用此选项，则不会从HAL或udev后端添加任何设备。 默认情况下启用。  </p>
+<p><strong>Option “AutoEnableDevices”</strong> <em>“boolean”</em>  </p>
+<p>如果禁用此选项，则将添加设备（并发送DevicePresenceNotify事件），但不启用，从而将策略留给客户端。 默认情况下启用。  </p>
+<p><strong>Option “Log”</strong> <em>“string”</em>  </p>
+<p>此选项控制在每条消息后日志是否刷新和&#x2F;或同步到磁盘。 可能的值为flush或sync。 默认情况下取消设置。</p>
+<h2 id="MODULE-SECTION"><a href="#MODULE-SECTION" class="headerlink" title="MODULE SECTION"></a><strong>MODULE SECTION</strong></h2><p>Module section用于指定应加载哪些Xorg服务器模块。 当Xorg服务器以静态形式构建时，将忽略此部分。 通常在此部分加载的模块类型是Xorg服务器扩展模块。 大多数其他模块类型在通过其他机制需要时自动加载。 Module section是可选的，可以在其中指定的所有条目也是可选的。</p>
+<p>本section中的条目可能有两种形式。 第一种也是最常用的形式是使用Load关键字的条目，如下所述：</p>
+<p><strong>Load</strong> <em>“modulename”</em></p>
+<p>这将指示服务器加载称为模块名称的模块。 提供的模块名称应该是模块的标准名称，而不是模块文件名称。 标准名称区分大小写，不包括“lib”前缀，或“.a”，“.o”或“.so”后缀。</p>
+<p>示例：可以使用以下条目加载DRI扩展模块：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-keyword">Load</span> <span class="hljs-string">&quot;dri&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Disable</strong> <em>“modulename”</em></p>
+<p>这指示服务器不加载称为模块名称的模块。 默认情况下，在服务器中加载一些模块，这将覆盖默认值。 如果给同一模块一个<strong>Load</strong>指令，它将覆盖Disable指令，并且加载模块。 提供的模块名称应该是模块的标准名称，而不是模块文件名称。 与<strong>Load</strong>指令一样，标准名称区分大小写，不包括“lib”前缀或“.a”，“.o”或“.so”后缀。</p>
+<p>第二种形式的子条目是 <strong>SubSection</strong>，其子部分名称是模块名称，<strong>SubSection</strong> 的内容是在加载模块时传递给它的 <strong>Options</strong>。</p>
+<p>示例：可以加载extmod模块（其中包含其他一组服务器扩展），通过使用以下条目禁用XFree86-DGA扩展：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">SubSection <span class="hljs-string">&quot;extmod&quot;</span>  <br>Option <span class="hljs-string">&quot;omit XFree86−DGA&quot;</span>  <br>EndSubSection<br></code></pre></td></tr></table></figure>
+
+<p>在<strong>ModulePath</strong>搜索路径中指定的每个目录中以及每个目录的驱动程序，扩展，输入，内部和多媒体子目录中搜索模块。 除此之外，首先搜索所有上述操作系统特定的子目录（如果存在的话）。</p>
+<p>要查看可用的扩展模块，请检查以下扩展子目录：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>lib<span class="hljs-regexp">/xorg/m</span>odules<br></code></pre></td></tr></table></figure>
+
+<p>除非使用“禁用”条目禁用，否则“extmod”，“dbe”，“dri”，“dri2”，“glx”和“record”扩展模块将自动加载。 建议至少要加载“extmod”扩展模块。 如果不是，一些常用的服务器扩展（如SHAPE扩展）将不可用。</p>
+<h2 id="EXTENSIONS-SECTION"><a href="#EXTENSIONS-SECTION" class="headerlink" title="EXTENSIONS SECTION"></a>EXTENSIONS SECTION</h2><p><strong>Extensions</strong> section 用于指定应启用或禁用哪些X11协议扩展。<strong>Extensions</strong> section是可选的，可以在其中指定的所有条目也是可选的。</p>
+<p>本节中的条目作为Option语句列出，扩展名称为第一个参数，布尔值为第二个参数。 扩展名名称区分大小写，并且匹配“Xorg -extension？”输出中显示的形式。</p>
+<p>示例：可以使用以下条目禁用MIT-SHM扩展：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;Extensions&quot;</span>  <br>Option <span class="hljs-string">&quot;MIT-SHM&quot;</span> <span class="hljs-string">&quot;Disable&quot;</span>  <br>EndSection<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="INPUTDEVICE-SECTION"><a href="#INPUTDEVICE-SECTION" class="headerlink" title="INPUTDEVICE SECTION"></a>INPUTDEVICE SECTION</h2><p>配置文件可能有多个<strong>InputDevice</strong> sections。 最近的X服务器使用HAL或udev后端进行输入设备枚举和输入热插拔。 如果正在使用热插拔（即启用AutoAddDevices），通常不需要在xorg.conf中提供<strong>InputDevice</strong> section。 如果启用热插拔，则使用鼠标，kbd和vmmouse驱动程序的<strong>InputDevice</strong> section将被忽略。</p>
+<p>如果禁用热插拔，通常至少有两个：一个用于核心（主）键盘，一个用于核心指针。 如果缺少这两个缺省配置，将使用缺少的缺省配置。 在没有明确指定的核心输入设备的情况下，使用标记为<strong>CorePointer</strong>（或CoreKeyboard）的第一个<strong>InputDevice</strong>。 如果没有匹配，则使用使用“鼠标”（或“kbd”）驱动程序的第一个<strong>InputDevice</strong>。 最后的备用是使用内置的默认配置。 当前，默认配置可能无法按预期在所有平台上工作。</p>
+<p><strong>InputDevice</strong> 部分具有以下格式：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;InputDevice&quot;</span>  <br>Identifier <span class="hljs-string">&quot;name&quot;</span>  <br>Driver <span class="hljs-string">&quot;inputdriver&quot;</span>  <br>options  <br>...  <br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p>在所有<strong>InputDevice</strong> section 中都需要<strong>Identifier</strong> 和<strong>Driver</strong> entries。 所有其他entries是可选的。</p>
+<p>Identifier entry指定此输入设备的唯一名称。 Driver entry指定要用于此输入设备的驱动程序的名称。 当使用可加载服务器时，将为每个激活的<strong>InputDevice</strong> section加载输入驱动程序模块“_inputdriver_”。 如果一个输入设备部分被一个活动的<strong>ServerLayout</strong> section引用（如果它被-<strong>keyboard</strong>或-<strong>pointer</strong>命令行选项引用），或者如果它被隐式选择为核心指针或键盘设备而没有这样的显式 参考。 最常用的输入驱动程序是Linux系统上的<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/evdev.4.xhtml">evdev（4）</a>，其他平台上的<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/kbd.4.xhtml">kbd（4）</a>和<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/mousedrv.4.xhtml">mousedrv（4）</a>。</p>
+<p>InputDevice section识别一些独立于驱动程序的<strong>Options</strong>，这里描述。 有关设备特定选项的说明，请参见各个输入驱动程序手册页。</p>
+<p><strong>Option “AutoServerLayout”</strong> <em>“boolean”</em>  </p>
+<p>始终将设备添加到此服务器实例使用的ServerLayout section。 这会影响隐式布局以及在配置和&#x2F;或命令行中指定的显式布局。  </p>
+<p><strong>Option “CorePointer”</strong>  </p>
+<p>已弃用，请参阅<strong>Floating</strong>  </p>
+<p><strong>Option “CoreKeyboard”</strong>  </p>
+<p>已弃用，请参阅<strong>Floating</strong>  </p>
+<p><strong>Option “AlwaysCore”</strong> <em>“boolean”</em><br>已弃用，请参阅<strong>Floating</strong>  </p>
+<p><strong>Option “SendCoreEvents”</strong> <em>“boolean”</em>  </p>
+<p>已弃用，请参阅<strong>Floating</strong>  </p>
+<p><strong>Option “Floating”</strong> <em>“boolean”</em></p>
+<p>启用时，输入设备设置为浮动，并且不通过任何主设备报告事件或控制光标。 该设备仅适用于使用X输入扩展API的客户端。 默认情况下禁用此选项。 选项<strong>CorePointer，CoreKeyboard，AlwaysCore</strong>和<strong>SendCoreEvents</strong>是选项<strong>Floating</strong>的反向（即<strong>SendCoreEvents“on”</strong>等效于<strong>Floating“off”</strong>）。  </p>
+<p>此选项仅控制启动行为，设备可能在运行时重新连接或设置为浮动。  </p>
+<p><strong>Option “TransformationMatrix”</strong> “a b c d e f g h i”  </p>
+<p>为绝对输入设备指定3x3变换矩阵。 输入设备将绑定到矩阵中给定的区域。 在大多数配置中，“a”和“e”指定设备所绑定的区域的宽度和高度，“c”和“f”指定区域的x和y偏移。 值范围是0到1，其中1表示所有根窗口的宽度或高度在一起，0.5表示一半的面积等。值表示3×3矩阵，第一，第二和第三组三个值表示第一 ，第二和第三行。 单位矩阵为“1 0 0 0 1 0 0 0 1”。</p>
+<p><strong>POINTER ACCELERATION</strong></p>
+<p>对于定点设备，以下选项控制指针相对于物理设备运动如何加速或减速。 大多数这些可以在运行时调整，有关详细信息，请参阅<a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/xinput.1.xhtml">xinput（1）</a>手册页。 这里只讨论最重要的加速度选项。</p>
+<p><strong>Option “AccelerationProfile”</strong> <em>“integer”</em></p>
+<p>选择配置文件。通俗地说，配置文件决定了加速的“感觉”。更正式地说，它定义了传递函数（当前设备速度和加速控制作为实际加速度的函数）的构建方式。这主要是个人偏好的问题。</p>
+<ul>
+<li><p><strong>0 classic（大部分兼容）</strong><br>经典模式，通常与大多数设备兼容。</p>
+</li>
+<li><p><strong>-1 none（仅应用恒定减速）</strong><br>不应用加速，仅有恒定的减速。</p>
+</li>
+<li><p><strong>1 device-dependent（设备依赖）</strong><br>根据设备的特性进行加速。</p>
+</li>
+<li><p><strong>2 polynomial（多项式函数）</strong><br>使用多项式函数进行加速。</p>
+</li>
+<li><p><strong>3 smooth linear（平滑线性）</strong><br>先是平滑过渡，然后线性加速。</p>
+</li>
+<li><p><strong>4 simple（慢速时正常，否则加速）</strong><br>速度慢时正常移动，速度快时加速。</p>
+</li>
+<li><p><strong>5 power（幂函数）</strong><br>使用幂函数进行加速。</p>
+</li>
+<li><p><strong>6 linear（速度越快，加速越多）</strong><br>线性加速，速度越快，加速度越大。</p>
+</li>
+<li><p><strong>7 limited（类似线性，但在阈值处达到最大）</strong><br>类似于线性加速，但在某个阈值达到最大加速。</p>
+</li>
+</ul>
+<p><strong>Option “ConstantDeceleration”</strong> <em>“real”</em></p>
+<p>使指针比正常速度慢 deceleration 倍。对高分辨率设备最有用。</p>
+<p><strong>Option “AdaptiveDeceleration”</strong> <em>“real”</em></p>
+<p>允许指针在速度慢时实际减速。最多会慢 adaptive deceleration 倍。可以实现精确的指针定位，而不牺牲速度。</p>
+<p><strong>Option “AccelerationScheme”</strong> <em>“string”</em></p>
+<p>选择方案，即底层算法。</p>
+<ul>
+<li>predictable 默认算法（行为更可预测）</li>
+<li>lightweight 旧的加速代码（如 X 协议规范中所述）</li>
+<li>none 无加速或减速</li>
+</ul>
+<p><strong>Option “AccelerationNumerator”</strong> <em>“integer”</em><br><strong>Option “AccelerationDenominator”</strong> <em>“integer”</em></p>
+<p>设置加速因子的分子和分母。加速因子是一个有理数，与阈值一起使用，可以调整配置文件以适应用户需求。简单和有限配置文件直接使用它（即加速因子），对于其他配置文件，加速因子越高，指针速度越快。通常，1 表示无加速，值高达 5 是合理的。</p>
+<p><strong>Option “AccelerationThreshold”</strong> <em>“integer”</em></p>
+<p>设置阈值，该阈值大致为使加速生效所需的速度（通常为每 10 毫秒的设备单位）。然而，具体效果因配置文件而异。</p>
+<h2 id="INPUTCLASS-SECTION"><a href="#INPUTCLASS-SECTION" class="headerlink" title="INPUTCLASS SECTION"></a>INPUTCLASS SECTION</h2><p>配置文件可能包含多个 InputClass 部分。这些部分是可选的，用于为自动添加的输入设备类提供配置。一个输入设备可以匹配多个 InputClass 部分。每个类可以覆盖前一个类的设置，因此最好将最通用的匹配部分放在前面。</p>
+<p><strong>InputClass</strong>节具有以下格式：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;InputClass&quot;</span>  <br>Identifier  <span class="hljs-string">&quot;name&quot;</span>  <br>entries  <br>...  <br>options  <br>...  <br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p>在所有 InputClass 部分中，Identifier 条目是必需的。所有其他条目都是可选的。</p>
+<p>Identifier 条目指定此输入类的唯一名称。Driver 条目指定要用于此输入设备的驱动程序名称。在检查完所有类之后，当使用可加载服务器时，将启用来自第一个 Driver 条目的 “inputdriver” 模块。</p>
+<p>当一个输入设备被自动添加时，其特征会与所有 InputClass 部分进行检查。每个部分可以包含可选条目以缩小类的匹配范围。如果没有出现任何可选条目，InputClass 部分是通用的，并将匹配任何输入设备。如果出现多个此类条目，则它们必须全部匹配才能应用配置。</p>
+<p>InputClass 部分中有两种类型的匹配条目。第一种类型允许将各种标记与设备的属性进行匹配。可以通过使用 ‘|’ 字符分隔参数来构造一个条目以匹配来自不同设备的属性。可以提供相同类型的多个条目，以在同一属性上添加多个匹配条件。例如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;InputClass&quot;</span><br>    Identifier <span class="hljs-string">&quot;My Class&quot;</span><br>    # 产品字符串必须包含 example，并且<br>    # 包含 gizmo 或 gadget<br>    MatchProduct <span class="hljs-string">&quot;example&quot;</span><br>    MatchProduct <span class="hljs-string">&quot;gizmo|gadget&quot;</span><br>    ...<br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p><strong>MatchProduct “</strong><em>matchproduct</em><strong>“</strong></p>
+<p>此条目用于检查设备的产品名称中是否包含子字符串 “matchproduct”。</p>
+<p><strong>MatchVendor “</strong><em>matchvendor</em><strong>“</strong></p>
+<p>此条目用于检查设备的厂商名称中是否包含子字符串 “matchvendor”。</p>
+<p><strong>MatchDevicePath “</strong><em>matchdevice</em><strong>“</strong></p>
+<p>此条目用于检查设备文件是否匹配 “matchdevice” 路径名模式。</p>
+<p><strong>MatchOS “</strong><em>matchos</em><strong>“</strong></p>
+<p>此条目用于检查操作系统是否匹配不区分大小写的 “matchos” 字符串。此条目仅在提供 uname(2) 系统调用的平台上支持。</p>
+<p><strong>MatchPnPID “</strong><em>matchpnp</em><strong>“</strong></p>
+<p>设备的即插即用 (PnP) ID 可以与 “matchpnp” shell 通配符模式进行检查。</p>
+<p><strong>MatchUSBID “</strong><em>matchusb</em><strong>“</strong></p>
+<p>设备的 USB ID 可以与 “matchusb” shell 通配符模式进行检查。ID 的格式是小写十六进制数字，以 ‘:’ 分隔。这与 lsusb(8) 程序的格式相同。</p>
+<p><strong>MatchDriver “</strong><em>matchdriver</em><strong>“</strong></p>
+<p>将区分大小写的字符串 “matchdriver” 与设备当前配置的驱动程序进行检查。使用此条目的部分的排序很重要，因为除非驱动程序已由配置后端或先前的 InputClass 部分设置，否则不会匹配。</p>
+<p><strong>MatchTag “</strong><em>matchtag</em><strong>“</strong></p>
+<p>此条目用于检查由配置后端分配的标签是否匹配 “matchtag” 模式。如果 “matchtag” 中给出的至少一个标签与后端分配的至少一个标签匹配，则找到匹配。</p>
+<p><strong>MatchLayout “</strong><em>matchlayout</em><strong>“</strong></p>
+<p>将区分大小写的字符串 “matchlayout” 与当前活动的 ServerLayout 部分进行检查。空字符串 “” 匹配隐式布局，如果未找到命名的 ServerLayout 部分，则出现隐式布局。</p>
+<p>第二种条目用于匹配设备类型。这些条目接受类似于 <strong>Option</strong> 条目的布尔参数。<br><strong>MatchIsKeyboard “</strong><em>bool</em><strong>“<br>MatchIsPointer “</strong><em>bool</em><strong>“<br>MatchIsJoystick “</strong><em>bool</em><strong>“<br>MatchIsTablet “</strong><em>bool</em><strong>“<br>MatchIsTouchpad “</strong><em>bool</em><strong>“<br>MatchIsTouchscreen “</strong><em>bool</em><strong>“</strong></p>
+<p>当输入设备匹配 <strong>InputClass</strong> 部分时，任何 <strong>Option</strong> 条目都会应用于设备。一个特定于 InputClass 的 Option 条目被识别。有关其余 Option 条目的描述，请参见上面的 InputDevice 部分。</p>
+<p><strong>Option “Ignore” “</strong><em>boolean</em><strong>“</strong></p>
+<p>此可选条目指定设备应完全忽略，不添加到服务器中。当设备由其他程序处理且不应生成 X 事件时，这可能很有用。</p>
+<h2 id="DEVICE-SECTION"><a href="#DEVICE-SECTION" class="headerlink" title="DEVICE SECTION"></a>DEVICE SECTION</h2><p>配置文件可能包含多个 Device 部分。必须至少有一个用于正在使用的视频卡。</p>
+<p>Device 部分的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;Device&quot;</span><br>    Identifier <span class="hljs-string">&quot;name&quot;</span><br>    Driver <span class="hljs-string">&quot;driver&quot;</span><br>    entries<br>    ...<br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p>在所有设备部分中，<strong>Identifier</strong> 和 <strong>Driver</strong> 条目是必需的。所有其他条目都是可选的。</p>
+<p><strong>Identifier</strong> 条目指定了该图形设备的唯一名称。<strong>Driver</strong> 条目指定了用于此图形设备的驱动程序名称。当使用可加载服务器时，驱动程序模块 “driver” 将为每个活动的设备部分加载。如果设备部分被活动的屏幕部分引用，则认为设备部分是活动的。</p>
+<p>设备部分识别一些与驱动程序无关的条目和选项，在此进行描述。并非所有驱动程序都使用这些与驱动程序无关的条目，而且其中许多不需要指定它们，因为信息是自动检测的。有关此信息的更多详细信息，请参阅各个图形驱动程序手册页面，并了解设备特定选项的描述。请注意，这里列出的大多数选项（但不包括其他条目）可以在屏幕部分而不是设备部分中指定。</p>
+<p><strong>BusID “</strong><em>bus−id</em><strong>“</strong></p>
+<p>此处指定了显卡的总线位置。对于 PCI&#x2F;AGP 卡，bus-id 字符串的形式为 PCI:bus:device:function（例如，“PCI:1:0:0” 可能适用于 AGP 卡）。在单头配置中使用主显卡时，此字段通常是可选的。在多头配置或在单头配置中使用次要显卡时，此条目是强制性的。其主要目的是在设备部分和其所代表的硬件之间建立明确的连接。此信息通常可以通过运行 pciaccess 工具 scanpci 来找到。</p>
+<p><strong>Screen</strong> <em>number</em></p>
+<p>此选项对于一个单一的 PCI 实体可以驱动多个显示器的卡是强制性的（即，多个 CRTCs 共享一个图形加速器和视频内存）。每个头部都需要一个设备部分，并且此参数确定每个设备部分应用于哪个头部。数字的合法值范围是 0 到每个实体的总头数减 1。大多数驱动程序要求主屏幕（0）存在。</p>
+<p><strong>Chipset “</strong><em>chipset</em><strong>“</strong></p>
+<p>这通常是可选的条目，指定了图形板上使用的芯片组。在大多数情况下，此条目不是必需的，因为驱动程序将探测硬件以确定芯片组类型。除非驱动程序特定文档建议您这样做，否则不要指定它。</p>
+<p><strong>Ramdac “</strong><em>ramdac−type</em><strong>“</strong></p>
+<p>此可选条目指定图形板上使用的 RAMDAC 类型。这仅由少数驱动程序使用，在大多数情况下，它不是必需的，因为驱动程序将尽可能探测硬件以确定 RAMDAC 类型。除非驱动程序特定文档建议您这样做，否则不要指定它。</p>
+<p><strong>DacSpeed</strong> <em>speed</em><br><strong>DacSpeed</strong> <em>speed−8 speed−16 speed−24 speed−32</em></p>
+<p>此可选条目指定 RAMDAC 速度评级（通常印在 RAMDAC 芯片上）。速度以 MHz 为单位。当给定一个值时，它适用于所有帧缓冲像素大小。当给定多个值时，它们分别适用于帧缓冲像素大小为 8、16、24 和 32。这不是许多驱动程序使用的选项，只有当 RAMDAC 的速度评级与驱动程序中的默认值不同时，或者当驱动程序无法自动检测到正确的默认值时，才需要指定它。除非驱动程序特定文档建议您这样做，否则不要指定它。</p>
+<p><strong>Clocks</strong> <em>clock …</em></p>
+<p>指定图形板上的像素时钟。时钟以 MHz 为单位，并可以指定为浮点数。该值被内部存储为最接近的 kHz。时钟的顺序很重要。它必须与在图形板上选择它们的顺序相匹配。可以指定多个 Clocks 行，并且每个 Clocks 行连接起来形成列表。大多数驱动程序不使用此条目，它仅对具有非可编程时钟的一些旧型号板卡是必需的。除非驱动程序特定文档明确建议您这样做，否则不要指定此条目。</p>
+<p><strong>ClockChip “</strong><em>clockchip−type</em><strong>“</strong></p>
+<p>此可选条目用于指定具有可编程时钟发生器的图形板上的时钟芯片类型。只有少数 Xorg 驱动程序支持可编程时钟芯片。有关详细信息，请参阅相应的驱动程序手册页面。</p>
+<p><strong>VideoRam</strong> <em>mem</em></p>
+<p>此可选条目指定安装在图形板上的视频内存量。此值以 kBytes 表示。在大多数情况下，这不是必需的，因为 Xorg 服务器会探测图形板以确定此数量。只有当驱动程序特定文档指示可能需要时，才需要指定。</p>
+<p><strong>BiosBase</strong> <em>baseaddress</em></p>
+<p>此可选条目指定 VGA 板的视频 BIOS 的基址。此地址通常会自动检测到，只有在驱动程序特定文档建议时才应指定。</p>
+<p><strong>MemBase</strong> <em>baseaddress</em></p>
+<p>此可选条目指定图形板线性帧缓冲区的内存基址。此条目不被许多驱动程序使用，只有在驱动程序特定文档建议时才应指定。</p>
+<p><strong>IOBase</strong> <em>baseaddress</em></p>
+<p>此可选条目指定 IO 基址。此条目不被许多驱动程序使用，只有在驱动程序特定文档建议时才应指定。</p>
+<p><strong>ChipID</strong> <em>id</em></p>
+<p>此可选条目指定表示芯片类型的数字 ID。对于 PCI 卡，通常是设备 ID。这可以用于覆盖自动检测，但只有在驱动程序特定文档建议时才应这样做。</p>
+<p><strong>ChipRev</strong> <em>rev</em></p>
+<p>此可选条目指定芯片修订号。这可以用于覆盖自动检测，但只有在驱动程序特定文档建议时才应这样做。</p>
+<p><strong>TextClockFreq</strong> <em>freq</em></p>
+<p>此可选条目指定用于常规文本模式的像素时钟频率。频率以 MHz 表示。这很少使用。</p>
+<p><strong>Option “ModeDebug” “</strong><em>boolean</em><strong>“</strong></p>
+<p>启用将有关模式设置的附加调试信息打印到服务器日志中。</p>
+<p><strong>Options</strong></p>
+<p>Option 标志可以在设备部分中指定。这些包括驱动程序特定选项和与驱动程序无关的选项。前者在驱动程序特定文档中进行了描述。一些后者在关于屏幕部分的部分下面描述，它们也可以包括在此处。</p>
+<h2 id="VIDEOADAPTOR-SECTION"><a href="#VIDEOADAPTOR-SECTION" class="headerlink" title="VIDEOADAPTOR SECTION"></a>VIDEOADAPTOR SECTION</h2><p>Nobody wants to say how this works. Maybe nobody knows …</p>
+<h2 id="MONITOR-SECTION"><a href="#MONITOR-SECTION" class="headerlink" title="MONITOR SECTION"></a>MONITOR SECTION</h2><p>配置文件可能有多个 Monitor 部分。通常应该至少有一个，用于当前使用的显示器，但当没有指定一个时，将创建一个默认配置。</p>
+<p>Monitor 部分的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;Monitor&quot;</span><br>Identifier <span class="hljs-string">&quot;name&quot;</span><br>entries<br>...<br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p>Monitor 部分中唯一必需的条目是 Identifier 条目。</p>
+<p><strong>Identifier</strong> 条目指定了此监视器的唯一名称。Monitor 部分可用于提供关于监视器规格、特定于监视器的选项以及要与监视器一起使用的视频模式的信息。</p>
+<p>对于启用了 RandR 1.2 的驱动程序，监视器部分可以与视频卡的特定输出相关联。通过使用视频驱动程序定义的输出名称加上监视器部分的标识符，可以通过在 Device 部分中添加以下格式的选项将监视器部分与输出相关联：</p>
+<p><strong>Option “Monitor-</strong><em>outputname</em><strong>“ “</strong><em>monitorsection</em><strong>“</strong></p>
+<p>（例如，对于 VGA 输出，使用 Option “Monitor-VGA” “VGA monitor”）</p>
+<p>如果没有将监视器部分具体关联到输出，则如果存在监视器部分，服务器将将其与输出相关联，以保持对以前的单头配置的兼容性。</p>
+<p>指定视频模式是可选的，因为服务器将使用监视器提供的 DDC 或其他信息自动配置可用模式的列表。当在 Monitor 部分中显式指定模式（使用 Mode、ModeLine 或 UseModes 关键字）时，不会包括具有相同名称的内置模式。然而，当内置模式的名称不同但满足监视器要求时，仍然会隐式包含它们。</p>
+<p>可以在 <strong>Monitor</strong> 部分中使用的条目如下所述。</p>
+<p><strong>VendorName “</strong><em>vendor</em><strong>“</strong></p>
+<p>此可选条目指定监视器的制造商。</p>
+<p><strong>ModelName “</strong><em>model</em><strong>“</strong></p>
+<p>此可选条目指定监视器的型号。</p>
+<p><strong>HorizSync</strong> <em>horizsync−range</em></p>
+<p>给出监视器支持的水平同步频率范围。horizsync-range 可以是逗号分隔的离散值或值范围。值范围是由连字符分隔的两个值。默认情况下，值以 kHz 为单位。如果在行尾添加了 MHz 或 Hz，则可以指定为 MHz 或 Hz。此处给出的数据由 Xorg 服务器用于确定视频模式是否在监视器规格内。此信息应该在监视器手册中可用。如果省略此条目，则使用默认范围 28−33kHz。</p>
+<p><strong>VertRefresh</strong> <em>vertrefresh−range</em></p>
+<p>给出监视器支持的垂直刷新频率范围。vertrefresh-range 可以是逗号分隔的离散值或值范围。值范围是由连字符分隔的两个值。默认情况下，值以 Hz 为单位。如果在行尾添加了 MHz 或 kHz，则可以指定为 MHz 或 kHz。此处给出的数据由 Xorg 服务器用于确定视频模式是否在监视器规格内。此信息应该在监视器手册中可用。如果省略此条目，则使用默认范围 43−72Hz。</p>
+<p><strong>DisplaySize</strong> <em>width height</em></p>
+<p>此可选条目给出监视器图片区域的宽度和高度，单位为毫米。如果给出，这将用于计算屏幕的水平和垂直间距（DPI）。</p>
+<p><strong>Gamma</strong> <em>gamma−value</em><br><strong>Gamma</strong> <em>red−gamma green−gamma blue−gamma</em></p>
+<p>这是一个可选条目，用于指定监视器的伽马校正。它可以指定为单个值或三个单独的 RGB 值。这些值应在 0.1 到 10.0 的范围内， 默认值为 1.0。并非所有驱动程序都能够使用此信息。</p>
+<p><strong>UseModes “</strong><em>modesection−id</em><strong>“</strong></p>
+<p>包含在名为 modesection-id 的 Modes 部分中列出的模式集合。这使得该部分中定义的所有模式可供此监视器使用。</p>
+<p><strong>Mode “</strong><em>name</em><strong>“</strong></p>
+<p>这是一个可选的多行条目，用于为监视器提供视频模式的定义。在大多数情况下，这不是必需的，因为内置的 VESA 标准模式集将足以满足需求。Mode 关键字表示多行视频模式描述的开始。模式描述以 EndMode 关键字终止。模式描述由以下条目组成：</p>
+<ul>
+<li><strong>DotClock</strong> clock</li>
+</ul>
+<p>用于该模式的点（像素）时钟速率。</p>
+<ul>
+<li><strong>HTimings</strong> hdisp hsyncstart hsyncend htotal</li>
+</ul>
+<p>指定该模式的水平定时。</p>
+<ul>
+<li><strong>VTimings</strong> vdisp vsyncstart vsyncend vtotal</li>
+</ul>
+<p>指定该模式的垂直定时。</p>
+<ul>
+<li><strong>Flags</strong> “flag” …</li>
+</ul>
+<p>指定一组可选的模式标志，每个标志是双引号中的单独字符串。”Interlace” 表示模式是交织的。”DoubleScan” 表示每个扫描线都是双倍的模式。”+HSync” 和 “−HSync” 可用于选择 HSync 信号的极性。”+VSync” 和 “−VSync” 可用于选择 VSync 信号的极性。”Composite” 可用于指定在支持此功能的硬件上的复合同步。此外，在某些硬件上，”+CSync” 和 “−CSync” 可用于选择复合同步极性。</p>
+<ul>
+<li><strong>HSkew</strong> hskew</li>
+</ul>
+<p>指定显示使能信号向右边缘偏移的像素数。并非所有驱动程序都使用此信息。如果需要覆盖服务器提供的默认值（如果有），则可能需要此选项。“Roving” 水平线表示此值需要增加。如果一条扫描线上的最后几个像素出现在屏幕左侧，则应将此值减少。</p>
+<ul>
+<li><strong>VScan</strong> vscan</li>
+</ul>
+<p>指定每个扫描线在屏幕上绘制的次数。并非所有驱动程序都使用此信息。小于 1 的值视为 1，这是默认值。通常，上述提到的 “DoubleScan” 标志会将此值加倍。</p>
+<p><strong>ModeLine “</strong><em>name</em><strong>“</strong> <em>mode−description</em></p>
+<p>此条目是 Mode 条目的更紧凑版本，也可用于指定监视器的视频模式。这是一个用于指定视频模式的单行格式。在大多数情况下，这不是必需的，因为内置的 VESA 标准模式集将足以满足需求。</p>
+<p>模式描述分为四个部分，前三个部分是必需的。第一个部分是点（像素）时钟。这是一个指定模式的像素时钟速率的单个数字，单位为 MHz。第二个部分是四个数字的列表，指定了水平定时。这些数字是 hdisp、hsyncstart、hsyncend 和 htotal 值。第三部分是四个数字的列表，指定了垂直定时。这些数字是 vdisp、vsyncstart、vsyncend 和 vtotal 值。最后一个部分是一组标志，指定模式的其他特性。Interlace 表示模式是交织的。DoubleScan 表示每个扫描线都是双倍的模式。+HSync 和 −HSync 可用于选择 HSync 信号的极性。+VSync 和 −VSync 可用于选择 VSync 信号的极性。Composite 可用于指定在支持此功能的硬件上的复合同步。此外，在某些硬件上，+CSync 和 −CSync 可用于选择复合同步极性。上述 Mode 条目描述中提到的 HSkew 和 VScan 选项也可以在此处使用。</p>
+<p><strong>Option “DPMS” “</strong><em>bool</em><strong>“</strong></p>
+<p>此选项控制服务器是否应为此屏幕启用 DPMS 扩展的电源管理。默认情况下，启用扩展。</p>
+<p><strong>Option “SyncOnGreen” “</strong><em>bool</em><strong>“</strong></p>
+<p>此选项控制视频卡是否应在绿色颜色引脚上驱动同步信号。并非所有卡都支持此选项，大多数监视器也不需要。默认情况下为关闭。</p>
+<p><strong>Option “Primary” “</strong><em>bool</em><strong>“</strong></p>
+<p>此可选条目指定监视器应被视为主要监视器。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “PreferredMode” “</strong><em>name</em><strong>“</strong></p>
+<p>此可选条目指定一个模式作为监视器的首选初始模式。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “Position” “</strong><em>x y</em><strong>“</strong></p>
+<p>此可选条目指定监视器在 X 屏幕内的位置。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “LeftOf” “</strong><em>output</em><strong>“</strong></p>
+<p>此可选条目指定监视器应位于给定名称的输出（非监视器）的左侧。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “RightOf” “</strong><em>output</em><strong>“</strong></p>
+<p>此可选条目指定监视器应位于给定名称的输出（非监视器）的右侧。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “Above” “</strong><em>output</em><strong>“</strong></p>
+<p>此可选条目指定监视器应位于给定名称的输出（非监视器）的上方。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “Below” “</strong><em>output</em><strong>“</strong></p>
+<p>此可选条目指定监视器应位于给定名称的输出（非监视器）的下方。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “Enable” “</strong><em>bool</em><strong>“</strong></p>
+<p>此可选条目指定是否应在启动时打开监视器。默认情况下，服务器将尝试启用所有连接的监视器。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “DefaultModes” “</strong><em>bool</em><strong>“</strong></p>
+<p>此可选条目指定服务器是否应将支持的默认模式添加到此监视器提供的模式列表中。默认情况下，服务器将添加默认模式；仅当您可以保证 EDID 将始终可用，或者如果您已添加了服务器可以使用的自定义模式行时，才应禁用此选项。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “MinClock” “</strong><em>frequency</em><strong>“</strong></p>
+<p>此可选条目指定监视器支持的最小点时钟，单位为 kHz。</p>
+<p><strong>Option “MaxClock” “</strong><em>frequency</em><strong>“</strong></p>
+<p>此可选条目指定监视器支持的最大点时钟，单位为 kHz。</p>
+<p><strong>Option “Ignore” “</strong><em>bool</em><strong>“</strong></p>
+<p>此可选条目指定完全忽略监视器，并且不通过 RandR 报告。如果硬件报告了不存在的输出，则此选项很有用。（仅限支持 RandR 1.2 的驱动程序）</p>
+<p><strong>Option “Rotate” “</strong><em>rotation</em><strong>“</strong></p>
+<p>此可选条目指定给定监视器的初始旋转。旋转的有效值为 “normal”、”left”、”right” 和 “inverted”。（仅限支持 RandR 1.2 的驱动程序）</p>
+<h2 id="MODES-SECTION"><a href="#MODES-SECTION" class="headerlink" title="MODES SECTION"></a>MODES SECTION</h2><p>配置文件可能有多个 Modes 部分，或者一个也没有。这些部分提供了一种独立于 Monitor 部分定义视频模式集合的方式。Monitor 部分可以通过使用 UseModes 关键字包含这些部分提供的定义。在大多数情况下，Modes 部分是不必要的，因为内置的 VESA 标准模式集将足以满足需求。</p>
+<p>Modes 部分的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;Modes&quot;</span><br>Identifier <span class="hljs-string">&quot;name&quot;</span><br>entries<br>...<br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p>Identifier 条目指定此模式描述集合的唯一名称。Modes 部分中允许的其他条目是在上面的 Monitor 部分中描述的 Mode 和 ModeLine 条目。</p>
+<h2 id="SCREEN-SECTION"><a href="#SCREEN-SECTION" class="headerlink" title="SCREEN SECTION"></a>SCREEN SECTION</h2><p>配置文件可能有多个 Screen 部分。必须至少有一个用于正在使用的“屏幕”。一个“屏幕”代表一个图形设备（Device 部分）和一个监视器（Monitor 部分）的绑定。如果一个 Screen 部分被一个活动的 ServerLayout 部分引用，或者通过命令行选项 -screen 引用，那么它被认为是“活动的”。如果两者都不存在，则配置文件中找到的第一个 Screen 部分被认为是活动的。</p>
+<p>Screen 部分的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;Screen&quot;</span><br>Identifier <span class="hljs-string">&quot;name&quot;</span><br>Device <span class="hljs-string">&quot;devid&quot;</span><br>Monitor <span class="hljs-string">&quot;monid&quot;</span><br>entries<br>...<br>SubSection <span class="hljs-string">&quot;Display&quot;</span><br>entries<br>...<br>EndSubSection<br>...<br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p><strong>Identifier</strong> 和 <strong>Device</strong> 条目是必需的。其他条目都是可选的。</p>
+<p>Identifier 条目指定此屏幕的唯一名称。Screen 部分提供了针对整个屏幕的特定信息，包括屏幕特定的选项。在多头配置中，将有多个活动的 Screen 部分，每个头一个。此部分可用的条目有：<br><strong>Device “</strong><em>device−id</em><strong>“</strong></p>
+<p>这个必需的条目指定要用于此屏幕的 Device 部分。这是将特定的图形卡与屏幕绑定的方法。device-id 必须与配置文件中 Device 部分的 Identifier 匹配。</p>
+<p><strong>Monitor “</strong><em>monitor−id</em><strong>“</strong></p>
+<p>指定要用于此屏幕的监视器描述。如果未指定监视器名称，则使用默认配置。目前，默认配置可能不会在所有平台上按预期工作。</p>
+<p><strong>VideoAdaptor “</strong><em>xv−id</em><strong>“</strong></p>
+<p>指定要与此屏幕一起使用的可选 Xv 视频适配器描述。</p>
+<p><strong>DefaultDepth</strong> <em>depth</em></p>
+<p>指定服务器应默认使用的颜色深度。-depth 命令行选项可用于覆盖此设置。如果都未指定，则默认深度是驱动程序特定的，但在大多数情况下是 8。</p>
+<p><strong>DefaultFbBpp</strong> <em>bpp</em></p>
+<p>指定默认使用的帧缓冲布局。-fbbpp 命令行选项可用于覆盖此设置。在大多数情况下，驱动程序将选择最佳的默认值。唯一一种情况是深度为 24，其中一些硬件支持打包的 24 位帧缓冲布局和稀疏的 32 位帧缓冲布局，这种情况下甚至有一个值的选择。</p>
+<p><strong>Options</strong></p>
+<p>在 Screen 部分可以指定各种选项标志。一些是特定于驱动程序的，并在驱动程序文档中描述。其他一些是与驱动程序无关的，并最终将在这里描述。</p>
+<p><strong>Option “Accel”</strong></p>
+<p>启用 XAA（X Acceleration Architecture），这是一种机制，使视频卡的 2D 硬件加速功能可供 Xorg 服务器使用。此选项默认为开启状态，但如果驱动程序存在错误，则可能需要将其关闭。有许多选项可用于禁用特定的加速操作，下面列出了这些选项。请注意，如果操作未加速（无论是由于硬件不支持还是驱动程序不支持），禁用操作将不会产生任何效果。</p>
+<p><strong>Option “InitPrimary” “</strong><em>boolean</em><strong>“</strong></p>
+<p>使用 Int10 模块来初始化主图形卡。通常，只有次要图形卡才会使用 Int10 模块进行软启动，因为主图形卡已经在启动时由 BIOS 初始化。默认值：false。</p>
+<p><strong>Option “NoInt10” “</strong><em>boolean</em><strong>“</strong></p>
+<p>禁用 Int10 模块，这是一个使用 int10 调用初始化图形卡的 BIOS 的模块。默认值：false。</p>
+<p><strong>Option “NoMTRR”</strong></p>
+<p>禁用 MTRR（Memory Type Range Register）支持，这是现代处理器的一个功能，可以将视频性能提高到 2.5 倍。一些硬件存在有缺陷的 MTRR 支持，而一些视频驱动程序在使用 MTRR 时已知会出现问题。</p>
+<p><strong>Option “XaaNoCPUToScreenColorExpandFill”</strong></p>
+<p>禁用从存储在系统内存中的源模式（使用内存映射孔）进行加速的矩形扩展填充。</p>
+<p><strong>Option “XaaNoColor8x8PatternFillRect”</strong></p>
+<p>禁用使用全彩模式对矩形区域进行加速填充。</p>
+<p><strong>Option “XaaNoColor8x8PatternFillTrap”</strong></p>
+<p>禁用使用全彩模式对梯形区域进行加速填充。</p>
+<p><strong>Option “XaaNoDashedBresenhamLine”</strong></p>
+<p>禁用加速虚线 Bresenham 线条绘制。</p>
+<p><strong>Option “XaaNoDashedTwoPointLine”</strong></p>
+<p>禁用在两个任意点之间绘制加速虚线。</p>
+<p><strong>Option “XaaNoImageWriteRect”</strong></p>
+<p>禁用从系统内存传输完整彩色矩形模式到视频内存的加速操作（使用内存映射孔）。</p>
+<p><strong>Option “XaaNoMono8x8PatternFillRect”</strong></p>
+<p>禁用使用单色模式对矩形区域进行加速填充。</p>
+<p><strong>Option “XaaNoMono8x8PatternFillTrap”</strong></p>
+<p>禁用使用单色模式对梯形区域进行加速填充。</p>
+<p><strong>Option “XaaNoOffscreenPixmaps”</strong></p>
+<p>禁用绘制存储在离屏视频内存中的像素图的加速操作。</p>
+<p><strong>Option “XaaNoPixmapCache”</strong></p>
+<p>禁用在离屏视频内存中对模式的缓存。</p>
+<p><strong>Option “XaaNoScanlineCPUToScreenColorExpandFill”</strong></p>
+<p>禁用从存储在系统内存中的源模式进行加速的矩形扩展填充（逐行进行）。</p>
+<p><strong>Option “XaaNoScanlineImageWriteRect”</strong></p>
+<p>禁用从系统内存传输完整彩色矩形模式到视频内存的加速操作（逐行进行）。</p>
+<p><strong>Option “XaaNoScreenToScreenColorExpandFill”</strong></p>
+<p>禁用从存储在离屏视频内存中的源模式进行加速的矩形扩展填充。</p>
+<p><strong>Option “XaaNoScreenToScreenCopy”</strong></p>
+<p>禁用从视频内存的一部分复制到另一部分的矩形区域的加速操作。</p>
+<p><strong>Option “XaaNoSolidBresenhamLine”</strong></p>
+<p>禁用加速的实线 Bresenham 线条绘制。</p>
+<p><strong>Option “XaaNoSolidFillRect”</strong></p>
+<p>禁用矩形区域的加速实色填充。</p>
+<p><strong>Option “XaaNoSolidFillTrap”</strong></p>
+<p>禁用 Bresenham 梯形区域的加速实色填充。</p>
+<p><strong>Option “XaaNoSolidHorVertLine”</strong></p>
+<p>禁用加速的实色水平和垂直线条绘制。</p>
+<p><strong>Option “XaaNoSolidTwoPointLine”</strong></p>
+<p>禁用两个任意点之间的加速实线绘制。</p>
+<p>每个 Screen 部分可以选择包含一个或多个 Display 子部分。这些子部分提供深度&#x2F;fbbpp 特定的配置信息，所选择的一个取决于用于屏幕的深度和&#x2F;或 fbbpp。Display 子部分的格式在下面的部分中描述。</p>
+<h2 id="DISPLAY-SUBSECTION"><a href="#DISPLAY-SUBSECTION" class="headerlink" title="DISPLAY SUBSECTION"></a>DISPLAY SUBSECTION</h2><p>每个 Screen 部分可以有多个 Display 子部分。”活动” Display 子部分是第一个与正在使用的深度和&#x2F;或 fbbpp 值匹配的子部分，或者在没有指定深度或 fbbpp 值的情况下，第一个没有匹配的子部分。Display 子部分是可选的。当没有与正在使用的深度和&#x2F;或 fbbpp 值匹配的子部分时，所有可以在此指定的参数都会回退到其默认值。</p>
+<p>Display 子部分的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json">SubSection <span class="hljs-string">&quot;Display&quot;</span><br>Depth depth<br>entries<br>...<br>EndSubSection<br></code></pre></td></tr></table></figure>
+
+<p><strong>Depth</strong> <em>depth</em></p>
+<p>该条目指定 Display 子部分应使用的颜色深度。通常会指定此条目，但可以省略以创建一个匹配所有的 Display 子部分，或者希望仅与 FbBpp 参数匹配时。允许的深度值范围取决于驱动程序。大多数驱动程序支持 8、15、16 和 24。一些还支持 1 和&#x2F;或 4，而一些可能支持其他值（如 30）。注意：深度表示像素中实际用于确定像素颜色的位数。32 不是有效的深度值。大多数使用每像素 32 位的硬件只使用其中的 24 位来存储颜色信息，这意味着颜色深度为 24，而不是 32。</p>
+<p><strong>FbBpp</strong> <em>bpp</em></p>
+<p>该条目指定此 Display 子部分应使用的帧缓冲格式。仅在提供深度为 24 的配置且允许在 24 bpp 打包帧缓冲格式和 32bpp 稀疏帧缓冲格式之间选择时才需要此条目。在大多数情况下，不应使用此条目。</p>
+<p><strong>Weight</strong> <em>red−weight green−weight blue−weight</em></p>
+<p>此可选条目指定在深度为 16 时用于屏幕的相对 RGB 加权。对于允许多种格式的驱动程序，也可以通过命令行使用 -weight 选项进行指定（参见 Xorg(1)）。</p>
+<p><strong>Virtual</strong> <em>xdim ydim</em></p>
+<p>此可选条目指定要使用的虚拟屏幕分辨率。对于大多数驱动程序，xdim 必须是 8 或 16 的倍数，并且在单色模式下必须是 32 的倍数。如果不是这种情况，给定的值将被舍入。对于超出指定虚拟大小的视频模式将被拒绝。如果不存在此条目，则虚拟屏幕分辨率将设置为容纳 Modes 条目中给出的所有有效视频模式。某些驱动程序&#x2F;硬件组合不支持虚拟屏幕。有关详细信息，请参阅相应的驱动程序特定文档。</p>
+<p><strong>ViewPort</strong> <em>x0 y0</em></p>
+<p>此可选条目设置初始显示的左上角。仅当虚拟屏幕分辨率与初始视频模式的分辨率不同时才相关。如果未提供此条目，则初始显示将位于虚拟显示区域的中心。</p>
+<p><strong>Modes “</strong><em>mode−name</em><strong>“</strong> <em>…</em></p>
+<p>此可选条目指定要使用的视频模式列表。每个指定的 mode−name 必须在双引号内。它们必须与适当 Monitor 部分中指定或引用的模式（包括隐式引用的内置 VESA 标准模式）相对应。服务器将从此列表中删除不满足各种要求的模式。此列表中的第一个有效模式将是启动时的默认显示模式。有效模式列表在内部转换为循环列表。可以使用 Ctrl+Alt+Keypad−Plus 切换到下一个模式，并使用 Ctrl+Alt+Keypad−Minus 切换到上一个模式。如果省略此条目，则将使用适当 Monitor 部分引用的有效模式。如果 Monitor 部分不包含模式，则将从内置的 VESA 标准模式中进行选择。</p>
+<p><strong>Visual “</strong><em>visual−name</em><strong>“</strong></p>
+<p>此可选条目设置默认的根视觉类型。这也可以从命令行指定（参见 Xserver(1) 手册页）。深度为 8 时可用的视觉类型为（默认为 PseudoColor）：</p>
+<ul>
+<li>StaticGray</li>
+<li>GrayScale</li>
+<li>StaticColor</li>
+<li>PseudoColor</li>
+<li>TrueColor</li>
+<li>DirectColor</li>
+</ul>
+<p>深度为 15、16 和 24 时可用的视觉类型为（默认为 TrueColor）：</p>
+<ul>
+<li>TrueColor</li>
+<li>DirectColor</li>
+</ul>
+<p>并非所有驱动程序都支持这些深度的 DirectColor。</p>
+<p>深度为 4 时可用的视觉类型为（默认为 StaticColor）：</p>
+<ul>
+<li>StaticGray</li>
+<li>GrayScale</li>
+<li>StaticColor</li>
+<li>PseudoColor</li>
+</ul>
+<p>深度为 1（单色）时可用的视觉类型为 StaticGray。</p>
+<p><strong>Black</strong> <em>red green blue</em></p>
+<p>此可选条目允许指定“黑色”。仅在深度为 1 时受支持。默认为黑色。</p>
+<p><strong>White</strong> <em>red green blue</em></p>
+<p>此可选条目允许指定“白色”。仅在深度为 1 时受支持。默认为白色。</p>
+<p><strong>Options</strong></p>
+<p>Display 子部分中可以指定选项标志。这些选项可能包括特定于驱动程序的选项和独立于驱动程序的选项。前者在特定于驱动程序的文档中有描述。一些后者在关于 Screen 部分的部分中描述，它们也可能在此处包括。</p>
+<h2 id="SERVERLAYOUT-SECTION"><a href="#SERVERLAYOUT-SECTION" class="headerlink" title="SERVERLAYOUT SECTION"></a>SERVERLAYOUT SECTION</h2><p>配置文件可以包含多个 ServerLayout 部分。一个“服务器布局”代表一个或多个屏幕（Screen 部分）和一个或多个输入设备（InputDevice 部分）的绑定，形成一个完整的配置。在多屏配置中，它还指定了各个屏幕之间的相对布局。如果通过命令行选项“-layout”或通过 ServerFlags 部分中的 Option “DefaultServerLayout” 条目引用它，ServerLayout 部分将被视为“活动”。前者优先于后者。如果不使用这些选项，则在配置文件中找到的第一个 ServerLayout 部分被视为活动部分。如果没有 ServerLayout 部分存在，则选择单个活动屏幕和两个活动（核心）输入设备，如上述相关部分所述。</p>
+<p>ServerLayout 部分的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;ServerLayout&quot;</span><br>Identifier <span class="hljs-string">&quot;name&quot;</span><br>Screen <span class="hljs-string">&quot;screen−id&quot;</span><br>...<br>InputDevice <span class="hljs-string">&quot;idev−id&quot;</span><br>...<br>options<br>...<br>EndSection<br></code></pre></td></tr></table></figure>
+
+<p>每个 ServerLayout 部分必须有一个 Identifier 条目和至少一个 Screen 条目。</p>
+<p>Identifier 条目指定了此服务器布局的唯一名称。 ServerLayout 部分提供了关于整个会话的特定信息，包括会话特定的选项。 ServerFlags 选项（如上所述）可以在此处指定，并且此处给出的选项会覆盖 ServerFlags 部分中给出的选项。</p>
+<p>可以在此部分中使用的条目在此处描述。</p>
+<p><strong>Screen</strong> <em>screen−num</em> <strong>“screen−id”</strong> <em>position−information</em></p>
+<p>对于每个在会话中使用的屏幕，必须提供其中之一。screen−id 字段是必需的，指定了要引用的 Screen 部分。screen−num 字段是可选的，可以用于在多头配置中指定屏幕编号。当省略此字段时，屏幕将按照它们在列表中出现的顺序进行编号。编号从 0 开始，并且必须连续。position−information 字段描述了多个屏幕的位置。有许多不同的方法可以提供此信息：</p>
+<ul>
+<li><em>x y</em></li>
+<li><strong>Absolute</strong> <em>x y</em></li>
+</ul>
+<p>这两者都指定了左上角的坐标为 (x, y)。绝对关键字是可选的。一些旧版本的 XFree86（4.2 及更早版本）不识别绝对关键字，因此最安全的做法是不使用它，只需指定坐标即可。</p>
+<ul>
+<li>RightOf “<strong><em>screen−id</em></strong>“  </li>
+<li>LeftOf “<strong><em>screen−id</em></strong>“  </li>
+<li>Above “<strong><em>screen−id</em></strong>“  </li>
+<li>Below “<strong><em>screen−id</em></strong>“  </li>
+<li>Relative “<strong><em>screen−id</em></strong>“** <em>x y</em></li>
+</ul>
+<p>这些将屏幕相对于另一个屏幕的位置。前四个将屏幕放置在另一个屏幕的右侧、左侧、上方或下方。在右侧或左侧定位时，顶部边缘对齐。在上方或下方定位时，左侧边缘对齐。Relative 形式指定了屏幕原点（左上角）相对于另一个屏幕原点的偏移量。</p>
+<p><strong>InputDevice “</strong><em>idev−id</em><strong>“ “</strong><em>option</em><strong>“</strong> <em>…</em></p>
+<p>每个正在会话中使用的输入设备都应该有一个此条目。通常至少需要两个，一个用于核心指针设备，另一个用于键盘设备。如果其中一个缺失，则使用上面在 INPUTDEVICE 部分中描述的方法搜索适当的 InputDevice 条目。idev−id 字段是必需的，并指定要引用的 InputDevice 部分的名称。可以指定多个选项字段，每个选项都在双引号中。在此处允许的选项是可以在 InputDevice 部分中给出的任何选项。通常，只有会话特定的输入设备选项才会在此处使用。最常用的选项是：</p>
+<p><strong>“CorePointer”<br>“CoreKeyboard”<br>“SendCoreEvents”</strong></p>
+<p>前两个选项通常用于指示核心指针设备和核心键盘设备，而后者用于指示发送核心事件。</p>
+<p><strong>Options</strong></p>
+<p>除了以下内容之外，还可以在此处指定 ServerFlags 部分中允许的任何选项。当相同的选项同时出现在两个位置时，此处给出的值将覆盖 ServerFlags 部分中给出的值。</p>
+<p><strong>Option “IsolateDevice” “</strong><em>bus−id</em><strong>“</strong></p>
+<p>将设备重置限制为指定的总线 ID。有关 bus−id 参数格式，请参阅 BusID 选项（在上面的 DEVICE SECTION 中描述）。此选项将覆盖 SingleCard（如果指定）。目前，只有 PCI 设备可以以这种方式隔离。</p>
+<p><strong>Option “SingleCard” “</strong><em>boolean</em><strong>“</strong></p>
+<p>与 <strong>IsolateDevice</strong> 类似，但使用布局中第一个设备的总线 ID。</p>
+<p>以下是一个具有两个鼠标的双屏配置的 <strong>ServerLayout</strong> 部分示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json">Section <span class="hljs-string">&quot;ServerLayout&quot;</span><br>Identifier <span class="hljs-string">&quot;Layout 1&quot;</span><br>Screen <span class="hljs-string">&quot;MGA 1&quot;</span><br>Screen <span class="hljs-string">&quot;MGA 2&quot;</span> RightOf <span class="hljs-string">&quot;MGA 1&quot;</span><br>InputDevice <span class="hljs-string">&quot;Keyboard 1&quot;</span> <span class="hljs-string">&quot;CoreKeyboard&quot;</span><br>InputDevice <span class="hljs-string">&quot;Mouse 1&quot;</span> <span class="hljs-string">&quot;CorePointer&quot;</span><br>InputDevice <span class="hljs-string">&quot;Mouse 2&quot;</span> <span class="hljs-string">&quot;SendCoreEvents&quot;</span><br>Option <span class="hljs-string">&quot;BlankTime&quot;</span> <span class="hljs-string">&quot;5&quot;</span><br>EndSection<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="DRI-SECTION"><a href="#DRI-SECTION" class="headerlink" title="DRI SECTION"></a>DRI SECTION</h2><p>这个可选的部分用于为直接渲染基础设施提供一些信息。关于此部分格式的详细信息可以在 <a target="_blank" rel="noopener" href="http://dri.freedesktop.org/">http://dri.freedesktop.org/</a> 线上找到。</p>
+<h2 id="VENDOR-SECTION"><a href="#VENDOR-SECTION" class="headerlink" title="VENDOR SECTION"></a>VENDOR SECTION</h2><p>可选的 Vendor 部分可用于提供供应商特定的配置信息。可以存在多个 Vendor 部分，它们可以包含一个标识符条目和多个选项标志。其中的数据在此版本中未使用。</p>
+<h2 id="SEE-ALSO"><a href="#SEE-ALSO" class="headerlink" title="SEE ALSO"></a>SEE ALSO</h2><p>General: <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man7/X.7.xhtml"><em>X</em>(7)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/Xserver.1.xhtml"><em>Xserver</em>(1)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/Xorg.1.xhtml"><em>Xorg</em>(1)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/cvt.1.xhtml"><em>cvt</em>(1)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man1/gtf.1.xhtml"><em>gtf</em>(1)</a>.</p>
+<p><strong>Not all modules or interfaces are available on all platforms.</strong></p>
+<p>Display drivers: <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/apm.4.xhtml"><em>apm</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/ati.4.xhtml"><em>ati</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/chips.4.xhtml"><em>chips</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/cirrus.4.xhtml"><em>cirrus</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/cyrix.4.xhtml"><em>cyrix</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/fbdev.4.xhtml"><em>fbdev</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/glide.4.xhtml"><em>glide</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/glint.4.xhtml"><em>glint</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/i128.4.xhtml"><em>i128</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/i740.4.xhtml"><em>i740</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/imstt.4.xhtml"><em>imstt</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/intel.4.xhtml"><em>intel</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/mga.4.xhtml"><em>mga</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/neomagic.4.xhtml"><em>neomagic</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/nv.4.xhtml"><em>nv</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/openchrome.4.xhtml"><em>openchrome</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/r128.4.xhtml"><em>r128</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/radeon.4.xhtml"><em>radeon</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/rendition.4.xhtml"><em>rendition</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/savage.4.xhtml"><em>savage</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/s3virge.4.xhtml"><em>s3virge</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/siliconmotion.4.xhtml"><em>siliconmotion</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/sis.4.xhtml"><em>sis</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/sisusb.4.xhtml"><em>sisusb</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/sunbw2.4.xhtml"><em>sunbw2</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/suncg14.4.xhtml"><em>suncg14</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/suncg3.4.xhtml"><em>suncg3</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/suncg6.4.xhtml"><em>suncg6</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/sunffb.4.xhtml"><em>sunffb</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/sunleo.4.xhtml"><em>sunleo</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/suntcx.4.xhtml"><em>suntcx</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/tdfx.4.xhtml"><em>tdfx</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/trident.4.xhtml"><em>trident</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/tseng.4.xhtml"><em>tseng</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/vesa.4.xhtml"><em>vesa</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/vmware.4.xhtml"><em>vmware</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/voodoo.4.xhtml"><em>voodoo</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/wsfb.4.xhtml"><em>wsfb</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/xgi.4.xhtml"><em>xgi</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/xgixp.4.xhtml"><em>xgixp</em>(4)</a>.</p>
+<p>Input drivers: <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/acecad.4.xhtml"><em>acecad</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/citron.4.xhtml"><em>citron</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/elographics.4.xhtml"><em>elographics</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/evdev.4.xhtml"><em>evdev</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/fpit.4.xhtml"><em>fpit</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/joystick.4.xhtml"><em>joystick</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/kbd.4.xhtml"><em>kbd</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/mousedrv.4.xhtml"><em>mousedrv</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/mutouch.4.xhtml"><em>mutouch</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/penmount.4.xhtml"><em>penmount</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/synaptics.4.xhtml"><em>synaptics</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/vmmouse.4.xhtml"><em>vmmouse</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/void.4.xhtml"><em>void</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/wacom.4.xhtml"><em>wacom</em>(4)</a>.</p>
+<p>Other modules and interfaces: <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/exa.4.xhtml"><em>exa</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/fbdevhw.4.xhtml"><em>fbdevhw</em>(4)</a>, <a target="_blank" rel="noopener" href="https://www.x.org/archive/X11R7.7/doc/man/man4/v4l.4.xhtml"><em>v4l</em>(4)</a>.</p>
+<h2 id="AUTHORS"><a href="#AUTHORS" class="headerlink" title="AUTHORS"></a>AUTHORS</h2><p>This manual page was largely rewritten by David Dawes <em><a href="mailto:&#100;&#97;&#x77;&#101;&#x73;&#x40;&#120;&#102;&#114;&#101;&#101;&#56;&#54;&#x2e;&#x6f;&#114;&#x67;">&#100;&#97;&#x77;&#101;&#x73;&#x40;&#120;&#102;&#114;&#101;&#101;&#56;&#54;&#x2e;&#x6f;&#114;&#x67;</a></em>.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/xorg/" class="category-chain-item">xorg</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/xorg/" class="print-no-link">#xorg</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>xorg配置文件说明</div>
+      <div>http://example.com/2024/06/09/xorg配置/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>waniani</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/09/hello-world/" title="Hello World">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
